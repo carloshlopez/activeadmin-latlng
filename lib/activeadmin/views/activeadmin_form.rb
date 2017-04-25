@@ -70,8 +70,6 @@ module ActiveAdmin
                     };
                   }
                 }
-
-              }
             },
             
 
