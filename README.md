@@ -37,6 +37,13 @@ end
 
 * `loading_map` - loading map library. `true` by default. Set to `false`, if map loaded in other place.
 
+* `use_geolocation` - Use current location to load map. `true` by default. Set to `false`, if you want to use default_lat and default_lng
+
+* `default_lat` - Latitude to load map at start. `55.7522200` by default
+
+* `default_lng` - Longitude to load map at start. `37.6155600` by default
+
+
 ### Example
 
 ```ruby
