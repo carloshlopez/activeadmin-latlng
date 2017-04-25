@@ -41,39 +41,22 @@ module ActiveAdmin
             coords: null,
             map: null,
             marker: null,
+            
+            recenterMap: function(){
+            console.log('Recentering map');
+              
+            },
 
             getCoordinates: function() {
-              if(!#{@use_geolocation}){
                 return {
                   lat: parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat},
                   lng: parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng},
                 };
-              }
-              else{
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                      return {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                      };
-                    }, function() {
-                      return {
-                        lat: parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat},
-                        lng: parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng},
-                      };
-                    });
-                  } else {
-                    // Browser doesn't support Geolocation
-                    return {
-                      lat: parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat},
-                      lng: parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng},
-                    };
-                  }
-                }
             },
             
 
             saveCoordinates: function() {
+              console.log('Saving coordinates');
               $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
               $(\"##{@id_lng}\").val( googleMapObject.coords.lng.toFixed(10) );
             },
@@ -102,6 +85,8 @@ module ActiveAdmin
                 googleMapObject.coords = { lat: e.latLng.lat(), lng: e.latLng.lng() };
                 googleMapObject.saveCoordinates();
               });
+              
+              googleMapObject.recenterMap();
             }
           }
         </script>" \
