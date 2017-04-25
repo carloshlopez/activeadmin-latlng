@@ -54,7 +54,7 @@ module ActiveAdmin
                     navigator.geolocation.getCurrentPosition(function(position) {
                       return {
                         lat: position.coords.latitude,
-                        lng: lng: position.coords.longitude
+                        lng: position.coords.longitude
                       };
                     }, function() {
                       return {
