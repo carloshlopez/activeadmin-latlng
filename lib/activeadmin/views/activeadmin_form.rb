@@ -8,22 +8,25 @@ module ActiveAdmin
         id_lat = args[:id_lat] || "#{class_name}_lat"
         id_lng = args[:id_lng] || "#{class_name}_lng"
         height = args[:height] || 400
+        default_lat = args[:default_lat] || 55.7522200
+        default_lng = args[:default_lng] || 37.6155600
         loading_map = args[:loading_map].nil? ? true : args[:loading_map]
+        use_geolocation = args[:use_geolocation].nil? ? true : args[:use_geolocation]
 
         case map
         when :yandex
           insert_tag(YandexMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map)
         when :google
-          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map)
+          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map, default_lat, default_lng, use_geolocation)
         else
-          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map)
+          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map, default_lat, default_lng, use_geolocation)
         end
       end
     end
 
     class LatlngProxy < FormtasticProxy
       def build(form_builder, *args, &block)
-        @lang, @id_lat, @id_lng, @height, @loading_map = *args
+        @lang, @id_lat, @id_lng, @height, @loading_map, @default_lat, @default_lng, @use_geolocation = *args
       end
     end
 
@@ -40,11 +43,37 @@ module ActiveAdmin
             marker: null,
 
             getCoordinates: function() {
-              return {
-                lat: parseFloat($(\"##{@id_lat}\").val()) || 55.7522200,
-                lng: parseFloat($(\"##{@id_lng}\").val()) || 37.6155600,
-              };
+              if(!#{@use_geolocation}){
+                return {
+                  lat: parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat},
+                  lng: parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng},
+                };
+              }
+              else{
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                      return {
+                        lat: position.coords.latitude,
+                        lng: lng: position.coords.longitude
+                      };
+                    }, function() {
+                      return {
+                        lat: parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat},
+                        lng: parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng},
+                      };
+                    });
+                  } else {
+                    // Browser doesn't support Geolocation
+                    return {
+                      lat: parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat},
+                      lng: parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng},
+                    };
+                  }
+                }
+
+              }
             },
+            
 
             saveCoordinates: function() {
               $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
