@@ -38,7 +38,7 @@ module ActiveAdmin
         "<div id=\"google_map\" style=\"height: #{@height}px\"></div>" \
         "<script>
           var googleMapObject = {
-            self: this,
+            latLng: null,
             coords: null,
             map: null,
             marker: null,
@@ -82,7 +82,7 @@ module ActiveAdmin
               
               var geocoder = new google.maps.Geocoder();
               geocoder.geocode({
-                  'latLng': googleMapObject.coords.lat.toFixed(10) + ',' + googleMapObject.coords.lng.toFixed(10)
+                  'latLng': googleMapObject.coords
                 }, function(results, status) {
                   if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
