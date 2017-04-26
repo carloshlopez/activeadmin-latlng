@@ -38,6 +38,7 @@ module ActiveAdmin
         "<div id=\"google_map\" style=\"height: #{@height}px\"></div>" \
         "<script>
           var googleMapObject = {
+            self: this
             coords: null,
             map: null,
             marker: null,
@@ -49,8 +50,8 @@ module ActiveAdmin
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                       var pos = {
-                        googleMapObject.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
-                        googleMapObject.saveCoordinates();
+                        self.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        self.saveCoordinates();
                       };
           
                     }, function() {
