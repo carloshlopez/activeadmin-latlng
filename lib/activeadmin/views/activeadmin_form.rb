@@ -49,10 +49,9 @@ module ActiveAdmin
                 
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                      var pos = {
+                      
                         self.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
                         self.saveCoordinates();
-                      };
           
                     }, function() {
                       console.log('No geologation available');
