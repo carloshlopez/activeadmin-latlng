@@ -43,8 +43,25 @@ module ActiveAdmin
             marker: null,
             
             recenterMap: function(){
-            console.log('Recentering map');
-              
+              if(#{@use_geolocation}){
+                console.log('Recentering map');    
+                
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                      var pos = {
+                        googleMapObject.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        googleMapObject.saveCoordinates();
+                      };
+          
+                    }, function() {
+                      console.log('No geologation available');
+                    });
+                  } else {
+                    // Browser doesn't support Geolocation
+                    console.log('No geologation available');
+                  }
+                
+                
             },
 
             getCoordinates: function() {
@@ -87,6 +104,7 @@ module ActiveAdmin
               });
               
               googleMapObject.recenterMap();
+              
             }
           }
         </script>" \
