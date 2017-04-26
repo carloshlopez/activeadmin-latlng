@@ -45,7 +45,9 @@ module ActiveAdmin
             marker: null,
             
             recenterMap: function(){
-              if(#{@use_geolocation} && parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat} == 4 && parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng} == -74){
+              var la = parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat};
+              var ln = parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng};
+              if(#{@use_geolocation} && la == 4 && ln == -74){
                 console.log('Recentering map');    
                 
                 if (navigator.geolocation) {
