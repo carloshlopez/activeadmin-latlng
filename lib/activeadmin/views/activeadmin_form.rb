@@ -49,10 +49,12 @@ module ActiveAdmin
                 
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                      
-                        googleMapObject.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        var cords = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        googleMapObject.coords = cords
                         googleMapObject.saveCoordinates();
-                        googleMapObject.marker.setPosition(googleMapObject.coords);
+                        googleMapObject.marker.setPosition(cords);
+                        googleMapObject.map.setCenter(cords);
+
           
                     }, function() {
                       console.log('No geologation available');
