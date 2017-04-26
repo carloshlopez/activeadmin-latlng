@@ -61,7 +61,7 @@ module ActiveAdmin
                     console.log('No geologation available');
                   }
                 
-                
+              }   
             },
 
             getCoordinates: function() {
