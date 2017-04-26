@@ -9,8 +9,8 @@ module ActiveAdmin
         id_lng = args[:id_lng] || "#{class_name}_lng"
         id_address = args[:id_address] || "#{class_name}_address"
         height = args[:height] || 400
-        default_lat = args[:default_lat] || 55.7522200
-        default_lng = args[:default_lng] || 37.6155600
+        default_lat = args[:default_lat] || 4
+        default_lng = args[:default_lng] || -74
         loading_map = args[:loading_map].nil? ? true : args[:loading_map]
         use_geolocation = args[:use_geolocation].nil? ? true : args[:use_geolocation]
 
@@ -45,7 +45,7 @@ module ActiveAdmin
             marker: null,
             
             recenterMap: function(){
-              if(#{@use_geolocation}){
+              if(#{@use_geolocation} && #{@default_lat} == 4 && #{@default_lng} == -74){
                 console.log('Recentering map');    
                 
                 if (navigator.geolocation) {
