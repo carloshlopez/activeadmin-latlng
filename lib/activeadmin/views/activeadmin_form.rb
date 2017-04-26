@@ -36,8 +36,28 @@ module ActiveAdmin
         loading_map_code = @loading_map ? "<script src=\"https://maps.googleapis.com/maps/api/js?language=#{@lang}&callback=googleMapObject.init\" async defer></script>" : ''
         "<li>" \
         "#{loading_map_code}" \
-        "<div id=\"google_map\" style=\"height: #{@height}px\"></div>" \
+        "<input type=\"checkbox\" id=\"use_location\"> Use Location <br>
+        <div id=\"google_map\" style=\"height: #{@height}px\"></div>" \
         "<script>
+        
+          $('#use_location').click(function(){
+            if($('#use_location').is(':checked')){
+              $('#google_map').hide();
+              $(\"##{@id_lat}\").val("");
+              $(\"##{@id_lng}\").val("");
+              $(\"##{@id_lat}\").attr('readonly', true);
+              $(\"##{@id_lng}\").attr('readonly', true);
+              $(\"##{@id_address}\").val("");
+              $(\"##{@id_address}\").attr('readonly', true);
+            }
+          else{
+            $('#google_map').show();
+            $(\"##{@id_lat}\").attr('readonly', false);
+            $(\"##{@id_lng}\").attr('readonly', false);
+            $(\"##{@id_address}\").attr('readonly', false);
+          }
+          });
+        
           var googleMapObject = {
             latLng: null,
             coords: null,
