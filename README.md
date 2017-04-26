@@ -33,6 +33,8 @@ end
 
 * `id_lat` and `id_lng` - identificator of latitude and longitude inputs. `<model_name>_lat` and `<model_name>_lng` by default.
 
+* `id_address` - identificator of address inputs. (Used for reverse geocoding) `<model_name>_address` by default.
+
 * `height` - map height in pixels, `400` by default.
 
 * `loading_map` - loading map library. `true` by default. Set to `false`, if map loaded in other place.

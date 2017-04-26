@@ -7,6 +7,7 @@ module ActiveAdmin
         map    = args[:map]    || :google
         id_lat = args[:id_lat] || "#{class_name}_lat"
         id_lng = args[:id_lng] || "#{class_name}_lng"
+        id_address = args[:id_address] || "#{class_name}_address"
         height = args[:height] || 400
         default_lat = args[:default_lat] || 55.7522200
         default_lng = args[:default_lng] || 37.6155600
@@ -17,16 +18,16 @@ module ActiveAdmin
         when :yandex
           insert_tag(YandexMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map)
         when :google
-          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map, default_lat, default_lng, use_geolocation)
+          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map, default_lat, default_lng, use_geolocation, id_address)
         else
-          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map, default_lat, default_lng, use_geolocation)
+          insert_tag(GoogleMapProxy, form_builder, lang, id_lat, id_lng, height, loading_map, default_lat, default_lng, use_geolocation, id_address)
         end
       end
     end
 
     class LatlngProxy < FormtasticProxy
       def build(form_builder, *args, &block)
-        @lang, @id_lat, @id_lng, @height, @loading_map, @default_lat, @default_lng, @use_geolocation = *args
+        @lang, @id_lat, @id_lng, @height, @loading_map, @default_lat, @default_lng, @use_geolocation, @id_address = *args
       end
     end
 
@@ -87,7 +88,7 @@ module ActiveAdmin
                   if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                       console.log(results[0].formatted_address);
-                      $('mission_address').val(results[0].formatted_address);
+                      $(\"##{@id_address}\").val(results[0].formatted_address);
                     }
                   }
               });
