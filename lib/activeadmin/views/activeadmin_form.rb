@@ -82,7 +82,7 @@ module ActiveAdmin
               
               var geocoder = new google.maps.Geocoder();
               geocoder.geocode({
-                  'latLng': googleMapObject.marker.getPosition()
+                  'latLng': googleMapObject.coords.lat + ',' + googleMapObject.coords.lng
                 }, function(results, status) {
                   if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
