@@ -42,6 +42,7 @@ module ActiveAdmin
             coords: null,
             map: null,
             marker: null,
+            geocoder: null,
             
             recenterMap: function(){
               if(#{@use_geolocation}){
@@ -79,6 +80,16 @@ module ActiveAdmin
               console.log('Saving coordinates');
               $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
               $(\"##{@id_lng}\").val( googleMapObject.coords.lng.toFixed(10) );
+              geocoder.geocode({
+                  'latLng': googleMapObject.marker.getPosition()
+                }, function(results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                      console.log(results[0].formatted_address);
+                      $('mission_address').val(results[0].formatted_address);
+                    }
+                  }
+              });
             },
 
             init: function() {
@@ -89,6 +100,8 @@ module ActiveAdmin
                 center: googleMapObject.coords,
                 zoom: 12
               });
+              
+              googleMapObject.geocoder = new google.maps.Geocoder();
               
               var latLngCoord = new google.maps.LatLng(googleMapObject.coords.lat, googleMapObject.coords.lng);
               googleMapObject.marker = new google.maps.Marker({
