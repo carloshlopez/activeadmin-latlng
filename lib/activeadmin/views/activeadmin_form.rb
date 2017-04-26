@@ -80,7 +80,7 @@ module ActiveAdmin
               console.log('Saving coordinates');
               $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
               $(\"##{@id_lng}\").val( googleMapObject.coords.lng.toFixed(10) );
-              geocoder.geocode({
+              googleMapObject.geocoder.geocode({
                   'latLng': googleMapObject.marker.getPosition()
                 }, function(results, status) {
                   if (status == google.maps.GeocoderStatus.OK) {
