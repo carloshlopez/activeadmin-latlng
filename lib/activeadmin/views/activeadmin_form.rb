@@ -38,7 +38,7 @@ module ActiveAdmin
         "<div id=\"google_map\" style=\"height: #{@height}px\"></div>" \
         "<script>
           var googleMapObject = {
-            self: this
+            self: this,
             coords: null,
             map: null,
             marker: null,
