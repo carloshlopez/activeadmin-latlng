@@ -102,8 +102,6 @@ module ActiveAdmin
                 center: googleMapObject.coords,
                 zoom: 12
               });
-              googleMapObject.map.setMyLocationEnabled(true);
-
               
               var latLngCoord = new google.maps.LatLng(googleMapObject.coords.lat, googleMapObject.coords.lng);
               googleMapObject.marker = new google.maps.Marker({
