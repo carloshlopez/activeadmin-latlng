@@ -50,8 +50,9 @@ module ActiveAdmin
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                       
-                        self.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
-                        self.saveCoordinates();
+                        googleMapObject.coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        googleMapObject.saveCoordinates();
+                        googleMapObject.marker.setPosition(googleMapObject.coords);
           
                     }, function() {
                       console.log('No geologation available');
