@@ -54,7 +54,7 @@ module ActiveAdmin
               $(\"##{@id_lat}\").attr('readonly', false);
               $(\"##{@id_lng}\").attr('readonly', false);
               $(\"##{@id_address}\").attr('readonly', false);
-              google.maps.event.trigger(map, 'resize');
+              google.maps.event.trigger(googleMapObject.map, 'resize');
             }
             else{
             haslocation = false;
