@@ -114,7 +114,7 @@ module ActiveAdmin
             
 
             saveCoordinates: function() {
-              if(!haslocation){
+              if(haslocation){
                 console.log('Saving coordinates');
                 $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
                 $(\"##{@id_lng}\").val( googleMapObject.coords.lng.toFixed(10) );
