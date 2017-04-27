@@ -50,6 +50,7 @@ module ActiveAdmin
         function changeMapView(){
             if($('#use_location').is(':checked')){
               haslocation = true;
+              googleMapObject.init();
               $('#google_map').show();
               $(\"##{@id_lat}\").attr('readonly', false);
               $(\"##{@id_lng}\").attr('readonly', false);
