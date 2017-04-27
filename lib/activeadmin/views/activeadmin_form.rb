@@ -65,7 +65,7 @@ module ActiveAdmin
           }
         }
         if(!haslocation){
-          $('.myCheckbox').prop('checked', false);
+          $('#use_location').prop('checked', false);
           changeMapView();
         }
         
