@@ -55,6 +55,7 @@ module ActiveAdmin
               $(\"##{@id_lng}\").attr('readonly', false);
               $(\"##{@id_address}\").attr('readonly', false);
               google.maps.event.trigger(googleMapObject.map, 'resize');
+              googleMapObject.recenterMap();
             }
             else{
             haslocation = false;
@@ -159,7 +160,7 @@ module ActiveAdmin
                 googleMapObject.saveCoordinates();
               });
               
-              googleMapObject.recenterMap();
+              
               
             }
           }
