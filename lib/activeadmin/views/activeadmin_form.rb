@@ -49,12 +49,14 @@ module ActiveAdmin
         
         function changeMapView(){
             if($('#use_location').is(':checked')){
+              haslocation = true;
               $('#google_map').show();
               $(\"##{@id_lat}\").attr('readonly', false);
               $(\"##{@id_lng}\").attr('readonly', false);
               $(\"##{@id_address}\").attr('readonly', false);
             }
             else{
+            haslocation = false;
               $('#google_map').hide();
               $(\"##{@id_lat}\").val(\"\");
               $(\"##{@id_lng}\").val(\"\");
@@ -112,21 +114,23 @@ module ActiveAdmin
             
 
             saveCoordinates: function() {
-              console.log('Saving coordinates');
-              $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
-              $(\"##{@id_lng}\").val( googleMapObject.coords.lng.toFixed(10) );
-              
-              var geocoder = new google.maps.Geocoder();
-              geocoder.geocode({
-                  'latLng': googleMapObject.coords
-                }, function(results, status) {
-                  if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                      console.log(results[0].formatted_address);
-                      $(\"##{@id_address}\").val(results[0].formatted_address);
+              if(!haslocation){
+                console.log('Saving coordinates');
+                $(\"##{@id_lat}\").val( googleMapObject.coords.lat.toFixed(10) );
+                $(\"##{@id_lng}\").val( googleMapObject.coords.lng.toFixed(10) );
+                
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'latLng': googleMapObject.coords
+                  }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                      if (results[0]) {
+                        console.log(results[0].formatted_address);
+                        $(\"##{@id_address}\").val(results[0].formatted_address);
+                      }
                     }
-                  }
-              });
+                });
+              }
             },
 
             init: function() {
