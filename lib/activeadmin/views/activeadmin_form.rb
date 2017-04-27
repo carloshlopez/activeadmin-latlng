@@ -40,8 +40,21 @@ module ActiveAdmin
         <div id=\"google_map\" style=\"height: #{@height}px\"></div>" \
         "<script>
         
-          $('#use_location').click(function(){
+        var la = parseFloat($(\"##{@id_lat}\").val()) || #{@default_lat};
+        var ln = parseFloat($(\"##{@id_lng}\").val()) || #{@default_lng};
+        var haslocation = true;
+        if(la == 4 && ln == -74){
+          haslocation = false;
+        }
+        
+        function changeMapView(){
             if($('#use_location').is(':checked')){
+              $('#google_map').show();
+              $(\"##{@id_lat}\").attr('readonly', false);
+              $(\"##{@id_lng}\").attr('readonly', false);
+              $(\"##{@id_address}\").attr('readonly', false);
+            }
+            else{
               $('#google_map').hide();
               $(\"##{@id_lat}\").val(\"\");
               $(\"##{@id_lng}\").val(\"\");
@@ -49,14 +62,14 @@ module ActiveAdmin
               $(\"##{@id_lng}\").attr('readonly', true);
               $(\"##{@id_address}\").val(\"\");
               $(\"##{@id_address}\").attr('readonly', true);
-            }
-          else{
-            $('#google_map').show();
-            $(\"##{@id_lat}\").attr('readonly', false);
-            $(\"##{@id_lng}\").attr('readonly', false);
-            $(\"##{@id_address}\").attr('readonly', false);
           }
-          });
+        }
+        if(!haslocation){
+          $('.myCheckbox').prop('checked', false);
+          changeMapView();
+        }
+        
+          $('#use_location').click(changeMapView);
         
           var googleMapObject = {
             latLng: null,
